@@ -15,7 +15,7 @@ Production-grade cross-reference engine for financial symbol taxonomy mapping wi
 ## Architecture
 
 ```
-Client → [Load Balancer] → XRef Service Pods (3+)
+Client → [API Gateway] → XRef Service Pods (3+)
                               ↓
                          Redis Cluster
                               ↓
@@ -314,25 +314,3 @@ mvn verify
 - Verify downstream endpoint is accessible
 - Check circuit breaker status for downstream
 - Review logs for specific errors
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Support
-
-For issues and questions:
-- Open a GitHub issue
-- Contact: your-email@example.com
-
----
-
-Built with ❤️ for high-performance financial data services
