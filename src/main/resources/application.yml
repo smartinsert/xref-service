@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: xref-service
+
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 2
+
+grpc:
+  server:
+    port: 9090
+  client:
+    downstream:
+      address: static://${DOWNSTREAM_HOST:localhost}:${DOWNSTREAM_PORT:9091}
+      negotiation-type: plaintext
+
+downstream:
+  endpoint: ${DOWNSTREAM_ENDPOINT:http://downstream-service/api/symbols}
+
+cache:
+  refresh:
+    cron: ${CACHE_REFRESH_CRON:0 0 23 * * ?}
+
+# Resilience4j
+resilience4j:
+  circuitbreaker:
+    instances:
+      xrefService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+      downstreamService:
+        sliding-window-size: 10
+        failure-rate-threshold: 60
+        wait-duration-in-open-state: 30s
+
+  ratelimiter:
+    instances:
+      xrefService:
+        limit-for-period: 1000
+        limit-refresh-period: 1s
+        timeout-duration: 0
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.example.xref: INFO
+    io.grpc: WARN

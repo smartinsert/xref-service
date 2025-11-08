@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.xref.proto";
+option java_outer_classname = "XRefProto";
+
+package xref;
+
+service CrossReferenceService {
+  rpc LookupSymbol(LookupRequest) returns (LookupResponse);
+  rpc BatchLookup(BatchLookupRequest) returns (stream LookupResponse);
+  rpc AddSymbol(AddSymbolRequest) returns (AddSymbolResponse);
+  rpc RefreshCache(RefreshCacheRequest) returns (RefreshCacheResponse);
+}
+
+message LookupRequest {
+  string id_type = 1;  // isin, cusip, sedol, ticker
+  string id_value = 2;
+}
+
+message LookupResponse {
+  string symbol_id = 1;
+  map<string, string> attributes = 2;
+  bool found = 3;
+  string error_message = 4;
+}
+
+message BatchLookupRequest {
+  repeated LookupRequest requests = 1;
+}
+
+message AddSymbolRequest {
+  string symbol_id = 1;
+  map<string, string> attributes = 2;
+}
+
+message AddSymbolResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message RefreshCacheRequest {
+  bool force_full_refresh = 1;
+}
+
+message RefreshCacheResponse {
+  int32 symbols_updated = 1;
+  int32 symbols_added = 2;
+  int32 symbols_removed = 3;
+  string status = 4;
+}

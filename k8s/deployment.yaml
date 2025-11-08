@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xref-service
+  labels:
+    app: xref-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: xref-service
+  template:
+    metadata:
+      labels:
+        app: xref-service
+    spec:
+      containers:
+      - name: xref-service
+        image: your-registry/xref-service:1.0.0
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 9090
+          name: grpc
+        env:
+        - name: REDIS_HOST
+          value: "redis-service"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: DOWNSTREAM_ENDPOINT
+          value: "http://downstream-service/api/symbols"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 5

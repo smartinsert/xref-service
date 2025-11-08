@@ -1,0 +1,17 @@
+target/
+*.class
+*.jar
+!maven-wrapper.jar
+.idea/
+*.iml
+.DS_Store
+.vscode/
+*.log
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+bin/
+.gradle/
+build/
