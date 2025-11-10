@@ -1,8 +1,9 @@
-package com.example.xref.service;
+package com.ankitthakur.xref.service;
 
-import com.example.xref.model.Symbol;
+import com.ankitthakur.xref.model.Symbol;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -10,9 +11,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 @Service
 public class DownstreamClient {
+
+    private static final Logger log = LoggerFactory.getLogger(DownstreamClient.class);
 
     @Value("${downstream.endpoint:http://downstream-service/api/symbols}")
     private String downstreamEndpoint;

@@ -1,19 +1,21 @@
-package com.example.xref.grpc;
+package com.ankitthakur.xref.grpc;
 
-import com.example.xref.model.Symbol;
-import com.example.xref.proto.*;
-import com.example.xref.service.CacheRefreshService;
-import com.example.xref.service.CrossReferenceService;
+import com.ankitthakur.xref.model.Symbol;
+import com.ankitthakur.xref.proto.*;
+import com.ankitthakur.xref.service.CacheRefreshService;
+import com.ankitthakur.xref.service.CrossReferenceService;
 import io.grpc.stub.StreamObserver;
-import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-@Slf4j
 @GrpcService
 public class XRefGrpcService extends CrossReferenceServiceGrpc.CrossReferenceServiceImplBase {
+
+    private static final Logger log = LoggerFactory.getLogger(XRefGrpcService.class);
 
     @Autowired
     private CrossReferenceService crossReferenceService;

@@ -1,16 +1,18 @@
-package com.example.xref.repository;
+package com.ankitthakur.xref.repository;
 
-import com.example.xref.model.Symbol;
-import lombok.extern.slf4j.Slf4j;
+import com.ankitthakur.xref.model.Symbol;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Slf4j
 @Repository
 public class SymbolRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(SymbolRepository.class);
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;

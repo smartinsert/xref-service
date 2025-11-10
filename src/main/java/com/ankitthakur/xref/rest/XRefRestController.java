@@ -1,19 +1,21 @@
-package com.example.xref.rest;
+package com.ankitthakur.xref.rest;
 
-import com.example.xref.model.Symbol;
-import com.example.xref.service.CacheRefreshService;
-import com.example.xref.service.CrossReferenceService;
-import lombok.extern.slf4j.Slf4j;
+import com.ankitthakur.xref.model.Symbol;
+import com.ankitthakur.xref.service.CacheRefreshService;
+import com.ankitthakur.xref.service.CrossReferenceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/xref")
 public class XRefRestController {
+
+    private static final Logger log = LoggerFactory.getLogger(XRefRestController.class);
 
     @Autowired
     private CrossReferenceService crossReferenceService;

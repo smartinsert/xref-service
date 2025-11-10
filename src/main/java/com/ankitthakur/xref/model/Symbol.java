@@ -1,4 +1,4 @@
-package com.example.xref.model;
+package com.ankitthakur.xref.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
